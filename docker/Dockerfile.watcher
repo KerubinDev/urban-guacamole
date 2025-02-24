@@ -1,0 +1,20 @@
+FROM alpine:latest
+
+# Instalar dependências
+RUN apk add --no-cache \
+    git \
+    bash \
+    curl \
+    docker-cli \
+    netcat-openbsd \
+    docker-compose
+
+# Copiar script de monitoramento
+COPY docker/scripts/watch-github.sh /usr/local/bin/watch-github.sh
+RUN chmod +x /usr/local/bin/watch-github.sh
+
+# Volume para o socket do Docker
+VOLUME /var/run/docker.sock
+
+# Executar script
+CMD ["/usr/local/bin/watch-github.sh"] 

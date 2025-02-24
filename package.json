@@ -1,0 +1,34 @@
+{
+  "name": "ecommerce-saas",
+  "version": "1.0.0",
+  "description": "Sistema SaaS de E-commerce",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.3.0",
+    "vue-router": "^4.2.0",
+    "vuex": "^4.1.0",
+    "axios": "^1.4.0",
+    "@stripe/stripe-js": "^1.54.0",
+    "@headlessui/vue": "^1.7.0",
+    "@heroicons/vue": "^2.0.0",
+    "chart.js": "^4.3.0",
+    "vue-chartjs": "^5.2.0",
+    "moment": "^2.29.0",
+    "lodash": "^4.17.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.0",
+    "vite": "^4.3.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.3.0",
+    "@tailwindcss/forms": "^0.5.0",
+    "@tailwindcss/typography": "^0.5.0",
+    "@tailwindcss/aspect-ratio": "^0.4.0",
+    "sass": "^1.62.0"
+  }
+} 

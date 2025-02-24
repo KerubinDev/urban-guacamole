@@ -1,0 +1,92 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: ecommerce_web
+    ports:
+      - "80:80"
+    volumes:
+      - ./app:/var/www/html
+      - ./logs:/var/www/logs
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - app-network
+    environment:
+      - DB_HOST=mysql
+      - DB_DATABASE=ecommerce
+      - DB_USERNAME=user
+      - DB_PASSWORD=password
+      - REDIS_HOST=redis
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.0
+    container_name: ecommerce_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=ecommerce
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=rootpassword
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./app/database/migrations:/docker-entrypoint-initdb.d
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: ecommerce_phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=rootpassword
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  redis:
+    image: redis:alpine
+    container_name: ecommerce_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  watcher:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.watcher
+    container_name: ecommerce_watcher
+    volumes:
+      - .:/app
+    environment:
+      - GITHUB_REPO=seu-repositorio/ecommerce
+      - GITHUB_BRANCH=main
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    depends_on:
+      - web
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
+    name: ecommerce_network
+
+volumes:
+  mysql_data:
+    name: ecommerce_mysql_data 
