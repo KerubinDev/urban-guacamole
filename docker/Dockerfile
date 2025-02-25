@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y \
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip intl opcache
 RUN pecl install redis && docker-php-ext-enable redis
 RUN pecl install imagick && docker-php-ext-enable imagick
-
+RUN apt install -y netcat
 # Configurar PHP
 COPY docker/php/php.ini /usr/local/etc/php/conf.d/app.ini
 RUN mkdir -p /var/www/html/public
