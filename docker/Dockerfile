@@ -22,7 +22,8 @@ RUN pecl install imagick && docker-php-ext-enable imagick
 
 # Configurar PHP
 COPY docker/php/php.ini /usr/local/etc/php/conf.d/app.ini
-
+RUN mkdir -p /var/www/html/public
+RUN a2enmod proxy proxy_http
 # Configurar Apache
 COPY docker/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite

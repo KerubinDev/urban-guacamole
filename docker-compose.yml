@@ -7,7 +7,7 @@ services:
       dockerfile: docker/Dockerfile
     container_name: ecommerce_web
     ports:
-      - "80:80"
+      - "86:80"
     volumes:
       - ./app:/var/www/html
       - ./logs:/var/www/logs
@@ -20,7 +20,7 @@ services:
       - DB_HOST=mysql
       - DB_DATABASE=ecommerce
       - DB_USERNAME=user
-      - DB_PASSWORD=password
+      - DB_PASSWORD=iwZMs5Kk0FA=
       - REDIS_HOST=redis
     restart: unless-stopped
 
@@ -32,8 +32,8 @@ services:
     environment:
       - MYSQL_DATABASE=ecommerce
       - MYSQL_USER=user
-      - MYSQL_PASSWORD=password
-      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_PASSWORD=iwZMs5Kk0FA=
+      - MYSQL_ROOT_PASSWORD=iwZMs5Kk0FA=
     volumes:
       - mysql_data:/var/lib/mysql
       - ./app/database/migrations:/docker-entrypoint-initdb.d
@@ -45,11 +45,11 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: ecommerce_phpmyadmin
     ports:
-      - "8080:80"
+      - "87:80"
     environment:
       - PMA_HOST=mysql
       - PMA_USER=root
-      - PMA_PASSWORD=rootpassword
+      - PMA_PASSWORD=iwZMs5Kk0FA=
     depends_on:
       - mysql
     networks:
@@ -73,7 +73,7 @@ services:
     volumes:
       - .:/app
     environment:
-      - GITHUB_REPO=seu-repositorio/ecommerce
+      - GITHUB_REPO=gdbarros94/urban-guacamole
       - GITHUB_BRANCH=main
       - DOCKER_HOST=unix:///var/run/docker.sock
     depends_on:
@@ -89,4 +89,4 @@ networks:
 
 volumes:
   mysql_data:
-    name: ecommerce_mysql_data 
+    name: ecommerce_mysql_data
